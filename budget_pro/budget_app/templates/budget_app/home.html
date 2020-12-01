@@ -1,0 +1,44 @@
+{% load static %}
+<html>
+<link rel='stylesheet' href={% static  'css/style.css' %}>
+<body>
+<form method='POST'>
+{% csrf_token %}
+<input type='text' value={{today_date}} name='date' class='textbox'>&nbsp;&nbsp;&nbsp;&nbsp;
+<input type='text' value={{today_day}} name='day' class='textbox'><br><br>
+
+<label>Expense Name</label> &nbsp;&nbsp;&nbsp;
+<input type='text' name='name' placeholder='Expense Name' class='textbox'><br><br>
+<label>Expense Amount</label>
+<input type='text' name='amnt' placeholder='Expense Amount' class='textbox'><br><br>
+<label>Expense Type</label>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<select name='type' class='dropdown'>
+<option value='transport'>Transport</option>
+<option value='studies'>Studies</option>
+<option value='gift'>Gift</option>
+<option value='vacation'>Vacation</option>
+</select>
+<br><br>
+<button class='buttons'><span>ADD EXPENSE</span></button>
+<br><br>
+<table border=2>
+<tr>
+<th>NAME</th>
+<th>TYPE</th>
+<th>AMOUNT</th>
+<th>DAY</th>
+<th>DATE</th>
+</tr>
+{% for i in all_expenses %}
+    <tr>
+    <td>{{i.expense_name}}</td>
+    <td>{{i.expense_type}}</td>
+    <td>{{i.expense_amnt}}</td>
+    <td>{{i.expense_day}}</td>
+    <td>{{i.expense_date}}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>
