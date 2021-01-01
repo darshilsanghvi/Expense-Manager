@@ -1,0 +1,48 @@
+.textbox
+{
+border-radius: 5px;
+padding-bottom: 10px;
+padding-left: 10px;
+padding-top: 10px;
+padding-right:10px;
+border: 2px solid black;
+}
+.buttons
+{
+border-radius: 5px;
+border:2px solid black;
+padding-left:10px;
+padding-bottom:10px;
+padding-top: 10px;
+text-align: center;
+background-color: white;
+}
+.buttons:hover{
+    background-color: skyblue;
+}
+label{
+    display:inline-block;
+}
+.dropdown{
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-right:50px;
+    border-radius:5px;
+    border: 2px solid black;
+}
+
+.form-control {
+    margin-bottom:5px; 
+    margin-top:5px; 
+   }
+  
+.navbar{
+    min-height:32px;
+}
+
+.navbar-brand{
+
+    padding-top:1px;
+    padding-bottom:1px;
+}
