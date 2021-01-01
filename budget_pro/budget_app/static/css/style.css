@@ -32,4 +32,17 @@ label{
     border: 2px solid black;
 }
 
+.form-control {
+    margin-bottom:5px; 
+    margin-top:5px; 
+   }
   
+.navbar{
+    min-height:32px;
+}
+
+.navbar-brand{
+
+    padding-top:1px;
+    padding-bottom:1px;
+}
