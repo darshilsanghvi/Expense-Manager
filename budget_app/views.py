@@ -2,13 +2,28 @@ from django.shortcuts import render, redirect
 from .models import expense, budget
 from datetime import datetime, timedelta
 import datetime
-
+import matplotlib.pyplot as plt
+import io
+import urllib, base64
+import numpy as np
 
 def home_page(request):
-    #week_list = []
+    today = datetime.date.today()
+    weekday = today.weekday()
+    start_delta = datetime.timedelta(days=weekday)
+    start_of_week = today - start_delta
+    week_dates = []
+    for day in range(1,8):
+        week_dates.append(start_of_week - datetime.timedelta(days=day))
+    date = request.POST.get('date','')
+    all_expenses = expense.objects.filter(expense_date=date)
+    return redirect('/budget/home/')
+    latest = budget.objects.last()
+    context = {'all_expenses':all_expenses,'latest':latest, 'week_dates':week_dates, 'today':today}
+    return render(request, 'budget_app/home.html', context)
+
+def add_expense(request):
     today_date = str(datetime.date.today().strftime('20%y-%m-%d'))
-    #for i in range(1,8):
-     #   week_list.append(datetime.date.today()-timedelta(i))
     today_day = str(datetime.date.today().strftime('%A'))
     latest = budget.objects.last()
     if request.method=='POST':
@@ -25,8 +40,7 @@ def home_page(request):
     all_expenses = expense.objects.all()
     context = {'today_date':today_date,'today_day':today_day,'latest':latest,
               'all_expenses':all_expenses}
-    return render(request, 'budget_app/base.html', context)
-
+    return render(request, 'budget_app/add_exp.html', context)
 
 def change_budget(request):
     if request.method=='POST':
@@ -41,7 +55,7 @@ def change_budget(request):
                 i.total_budget = int(monthly_income)
             i.save()
         return redirect('/budget/home/')
-    return render(request, 'budget_app/home.html')
+    return render(request, 'budget_app/change_budget.html')
 
 
 def delete_expense(request, pk):
@@ -53,3 +67,4 @@ def delete_expense(request, pk):
         i.delete()
         return redirect('/budget/home/')
     return render(request, "budget_app/delete.html")
+

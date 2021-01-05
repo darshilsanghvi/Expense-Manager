@@ -1,0 +1,30 @@
+{% extends "budget_app/base.html" %}
+{% block content %}
+{% load static %}
+<html>
+<br>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+<form method='POST'>
+{% csrf_token %}
+<div class="col d-flex justify-content-center">
+    <div class="card" style="width: 25rem;height:20rem;background-color:#5b7deb;">
+        <img src="{% static 'images/budget.jpg' %}" class="card-img-top" style="height:150px;">
+        <div class="card-body">
+            <h4>Enter your monthly budget</h4><br>
+            <div class="input-group mb-3">
+                <input type="text" name="budget" class="form-control" placeholder="Budget" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">Done</button>
+                </div>          
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+</body>
+</html>
+{% endblock %}

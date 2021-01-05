@@ -1,108 +1,37 @@
 {% load static %}
 <html>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<link rel='stylesheet' href={% static  'css/style.css' %}>
-<script>
-    function check(){
-        var a = document.getElementById("amnt");
-        if(({{latest.left_budget}}-a.value)<0){
-            alert("Your expense is above your limit!!!");
-        }
-        else if(({{latest.left_budget}}-a.value)==0) {
-            alert("Your expense is on line beware!!");
-        }}
-</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 <body>
-<form method='POST'>    
-    {% csrf_token %}
+<nav class ="navbar navbar-expand-lg bg-secondary" >
+<ul class ="nav nav-tabs">
+<a class="navbar-brand" style="color:white;text-size:40px;">
+    <img src={% static 'images/logo.jpg' %} width="30" height="30" class="d-inline-block align-top" alt="">
+    Expense Manager
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-     <!-- Display today's day and date -->
-    <div class="form-row">
-        <div class="form-group col-sm-3 pt-3 pl-3">
-            <input type='text' value={{today_date}} name='date' class='form-control'>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div class="form-group col-sm-3 pt-3">
-            <input type='text' value={{today_day}} name='day' class='form-control'>
-        </div>
-    </div>
-
-    <div class="float-sm-right" style="padding-right:100px;">
-        <div class="card bg-info" style="width: 17rem;">
-            <div class="card-body">
-                <h6 class="card-title">Monthly budget</h6>
-                <p class="card-text">{{latest.total_budget}}</p>
-                <h6 class="card-title">Amount Left</h6>
-                <p class="card-text">{{latest.left_budget}}</p>
-                <a href="change_budget" class="btn btn-primary" role="button"><span>change</span></a>
-            </div>
-        </div>
-    </div>
-
-    <!--expense Name input-->
-    <div class="form-row">
-        <div class="col-sm-2 pt-1 pl-3">
-            <label class="col-form-label" for="name">Expense Name</label> &nbsp;&nbsp;&nbsp;
-        </div>
-        <div class="col-sm-5 pt-1 pl-3">
-            <input type='text' name='name' placeholder='Expense Name' class='form-control' id="name">
-        </div>
-    </div>
-
-    <!--Expense amount input-->
-    <div class="form-row"> 
-        <div class="col-sm-2 pt-3 pl-3">   
-            <label class="col-form-label" for="amnt">Expense Amount</label>
-        </div>
-        <div class="col-sm-5 pt-3 pl-3">
-            <input type='text' name='amnt' placeholder='Expense Amount' class='form-control' id="amnt">
-        </div>
-     </div>   
-
-     <!--Expense type dropdown input-->
-    <div class="form-row">   
-        <div class="col-sm-2 pt-3 pl-3"> 
-        <label class="col-form-label" for="type">Expense Type</label>
-        </div>
-        <div class="col-sm-5 pt-3 pl-3">
-            <select name='type' class='form-control' id="type">
-                <option value='transport'>Transport</option>
-                <option value='studies'>Studies</option>
-                <option value='gift'>Gift</option>
-                <option value='vacation'>Vacation</option>
-            </select>
-        </div>
-    </div>  
-
-    <!-- Add Expense button -->
-    <div class="form-row">
-    <div class="col-sm-2 pt-3 pl-3">
-        <button id="add_expense" class='btn btn-primary' onclick=check()><span>ADD EXPENSE</span></button>
-    </div>
-    </div>
-</form>
-
-<!-- Dates Navbar -->
-<table class="table table-hover table-dark table-striped">
-            <tr>
-                <th scope="col">NAME</th>
-                <th scope="col">TYPE</th>
-                <th scope="col">AMOUNT</th>
-                <th scope="col">DAY</th>
-                <th scope="col">DATE</th>
-            </tr>
-<tbody>
-            {% for i in all_expenses %}
-                    <tr>
-                        <td>{{i.expense_name}}</td>
-                        <td>{{i.expense_type}}</td>
-                        <td>{{i.expense_amnt}}</td>
-                        <td>{{i.expense_day}}</td>
-                        <td>{{i.expense_date}}</td>
-                        <td><a href="delete/{{i.pk}}" name={{i.pk}} class="btn btn-primary" style="height:30px;"><span>Delete</span></a></td>
-                    </tr>
-            {% endfor %}
-        </tbody>
-</table>
-
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <div class="collapse navbar-collapse">
+<li class ="nav-item">
+<a class ="nav-link" href="/budget/home" style="color:white;"> My Expenses </a>
+</li>
+<li class ="nav-item">
+<a class ="nav-link" href="/budget/home/add_expense" style="color:white;"> Add Expense </a>
+</li>
+<li class ="nav-item">
+<a class ="nav-link" href="/budget/home/change_budget" style="color:white;"> Change Budget </a>
+</li>
+</ul>
+</nav>
+<div>
+{% block content %}
+{% endblock %}
+</div>
 </body>
 </html>

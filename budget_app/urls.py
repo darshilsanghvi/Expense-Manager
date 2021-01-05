@@ -17,6 +17,9 @@ register_converter(DateConverter, 'yyyy')
 
 urlpatterns = [
         path('home/',views.home_page),
+        path('home/add_expense', views.add_expense),
         path('home/change_budget/', views.change_budget),
         path('home/delete/<int:pk>', views.delete_expense),
-              ]
+        path('home/date/2020-12-12', views.show_dates),
+        path('home/date/<yyyy:date>/', views.show_dates),
+            ]

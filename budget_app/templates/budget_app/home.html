@@ -1,17 +1,61 @@
-
-{% load static %}
+{% extends "budget_app/base.html" %}
+{% block content %}
 <html>
-<head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<!--<link rel='stylesheet' href={% static  'css/style.css' %}>-->
-</head>
 <body>
-<form method='POST'>
 {% csrf_token %}
-<label>Enter your monthly budget</label>
-<input type="text" name="budget"></input>
-<button>Done</button>
-</form>
-
-</body>
+<div class="row">
+<div class="col-sm-3 pl-5 pt-3">
+<h5>Show expenses as per date </h5>
+</div>
+<div class="col-sm-5 pt-3">
+<select name='date' style="width:250px; height:40px;">
+    <option value="{{today}}" selected>{{today}}</option>
+    {% for i in week_dates %}
+        <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+</select>
+<button class="btn btn-primary" type="submit">GO!!</button> 
+</div> 
+ </div>     
+<br>
+<form method='POST'>
+<br>
+<div class="form-row">
+<div class="float-sm-left pl-4">
+<table class="table table-hover table-dark table-striped" style="width:900;">
+            <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">TYPE</th>
+                <th scope="col">AMOUNT</th>
+                <th scope="col">DAY</th>
+                <th scope="col">DATE</th>
+            </tr>
+<tbody>
+            {% for i in all_expenses %}
+                    <tr>
+                        <td>{{i.expense_name}}</td>
+                        <td>{{i.expense_type}}</td>
+                        <td>{{i.expense_amnt}}</td>
+                        <td>{{i.expense_day}}</td>
+                        <td>{{i.expense_date}}</td>
+                        <td><a href="delete/{{i.pk}}" name={{i.pk}} class="btn btn-primary" style="height:30px;"><span>Delete</span></a></td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+</table>
+</div>
+<div class="float-sm-right" style="padding-left:50px">
+        <div class="card bg-info" style="width: 15rem;">
+            <div class="card-body">
+                <h6 class="card-title">Monthly budget</h6>
+                <p class="card-text">{{latest.total_budget}}</p>
+                <h6 class="card-title">Amount Left</h6>
+                <p class="card-text">{{latest.left_budget}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 </html>
+</body>
